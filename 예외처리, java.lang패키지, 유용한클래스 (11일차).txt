@@ -1,0 +1,209 @@
+﻿1. 오류와 예외
+1. 오류(Error) - 시스템 문제
+2. 예외(Exception) - 코드 상의 문제
+* 프로그래머가 통제 가능한 상황
+    2.  예외 클래스의 종류
+1. Throwable
+* Exception - 컴파일시 예외
+* 예외처리를 하지 않으면 컴파일 X
+* 반드시 처리해야 하는 예외
+*      * RuntimeException - 실행 중 예외
+   * 예외처리를 하지 않아도 컴파일 O
+   * 실행 중 체크되는 예외
+   *         * Throwable(컴파일 시 체크되는 예외)
+      1. Exception
+      2. IOException
+      3. FileNotFoundException
+      * 예외발생시 컴파일 X, 실행할 수 있는 class 파일 X
+      * Throwable(컴파일은 O, 실행 중 발생)
+      1. Exception
+      2. RuntimeException
+      3. ArithmeticException
+________________
+    3.  try-catch-finally 문
+         * try {
+                // 예외가 발생할지도 모르는 구간
+                } catch(예외 객체) {
+                // 예외객체 예시) FileNotFoundException e - 발생한 예외정보
+                // 예외가 발생하면 유입되는 구간
+                } finally {
+                // 예외가 발생하든 안하든 항상 실행되는 구간
+                }
+
+
+         * catch는 여러개 사용 가능 혹은 한번에 사용 가능
+ex) catch (FileNotFoundException | ClassNotFoundException e)
+         *            * 자주사용
+         * getMessage();
+         * printStackTrace(); : 오류 추적
+________________
+
+
+    4.  try-with-resources
+            * AutoCloseable 인터페이스 : close()
+            * try {
+
+} catch (...) {
+
+} finally {
+        // resources 해제
+        // 로그 기록
+}
+            *     5.  예외처리 미루기
+               * throws -> 예외가 발생할 수 있는 메서드를 호출하는 쪽에서 예외전가
+ex) throws 전가 시킬 예외 클래스 …
+               * Exception 계열(컴파일시 체크되는 예외)에서만 전가시 throws를 명시
+               * RuntimeException 계열(실행 중 체크되는 예외) 따로 throws 명시X
+-> throws 생략 가능 : 유연한 예외처리
+
+
+                  *   ________________
+    6.  다중 예외 처리
+
+
+    7. 사용자 정의 예외
+회원 아이디 중복 : DuplicateMemberIDException
+로그인 기능 - 아이디, 비밀번호
+                     1. 아이디 중복 체크
+                     * MemberNotFoundException
+                     2. 비밀번호 일치 체크
+                     * PasswordIncorrectException
+________________
+
+
+    8.  java.lang 패키지
+                     * String
+                     * Exception
+    9.  Object 클래스
+                     * 모든 클래스의 상위 클래스
+                     * extends Object를 자동추가(컴파일러)
+
+
+    10.  Object 클래스의 종류
+                     1. equal()
+                     * 메모리 비교
+                     * public boolean equals(Object obj) {
+        return (this == obj); 
+}
+객체의 참조 주소 비교(객체의 힙메모리의 물리적 위치 일치)
+this ? - 자신 객체
+Object obj - 비교 대상 객체
+                     2. Class getClass()
+                     * 클래스의 정보
+                     3. hashCode() : 인스턴스의 주소
+                     * hash -> 검색
+                     * 물리적 위치(주소)
+                     * 주소값 비교
+                     4. toString()
+                     * 객체를 출력하면 자동으로 호출되는 메서드
+
+
+                     * public String toString() {
+        return getClass().gerName() + “@” + Integer.toHexString(hashCode());
+}
+클래스명 + 객체주소
+
+
+                        * Class getClass()
+                        * 클래스의 정보
+                        * getName : 패키지명을 포함한 클래스
+
+
+                        * Object
+                        * String toString()
+                        * boolean equals() // 물리적 동일성
+                        * int hashCode() // 물리적 위치
+
+
+                        * String
+                        * String toString()
+                        * boolean equals() // 논리적 동일성
+                        * int hashCode() // 논리적 동일성
+
+
+                        * 논리적 동일성
+                        * equals(), hashCode()
+
+
+  
+
+
+
+                        * java.utils.Objects : Object 클래스 편의기능
+                        * hash
+                        * java.utils.Araays : 배열 편의기능
+                        * Java.utils.Collections;
+
+
+                        * … 가변 매개변수
+                        *                           *   
+
+
+
+메서드 재정의
+
+
+    11.  String 클래스
+                           * 선언하는 방법 두가지
+                           * String str = new String(“abc”); - 힙에 생성
+                           * String str = “abc”; - 메모리에 생성
+
+
+                           * 문자열 불변
+                           * 문자열
+                           * private final char[] value
+                           * JDK12
+                           * private final byte[] value
+                           * 변경 불가 -> 문자열 객체 변경 불가 X
+
+
+                           * +연산자 : 문자열 결합
+                           * 문자열을 결합할때마다 새로운 문자열 객체 생성 -> 메모리 낭비
+-> 때문에 StringBuffer, StringBuilder 사용
+
+
+    12.  StringBuffer, StringBuilder // byte[] value; -> 버퍼
+                              * byte[] value = new byte[16];
+                              *   
+
+    13.  Wrapper 클래스
+                                 * 기본 자료형을 감싼 클래스
+byte - Byte, short - Short, int - Integer, long - Long
+char - Character, boolean - Boolean, float - Float, double - Double
+
+
+                                 * class Integer {
+….
+
+final int value;
+…
+}
+                                    * parse : 원래 자료형으로 변환
+                                    * fotmat :  특정 형식으로 문자열 변환
+                                    *                                          * 언박싱 : 객체를 기본형으로 꺼내는 것 / intValue()
+                                       * 오토박싱 : 기본형으로 객체를 바꾸는 것 / valueOf()
+
+
+
+
+    14.  Class 클래스
+                                       * 클래스로더 -> 클래스 -> 클래스 정보(Class)
+                                       * 모든 클래스의 정적 변수로 Class class
+                                       * Object - Class getClass()
+                                       * 기본적으로 클래스 로더 -> 데이터 영역 로딩, Class
+
+
+                                       * 동적 로딩
+                                       * 실행 중 동적으로 클래스 -> 데이터 영역
+                                       * Class.forName() 사용
+
+
+    15.  유용한 클래스
+                                       1. java.util.Math
+                                       * ceil() : 올림
+                                       * floor() : 버림
+                                       * round() : 반올림
+                                       * abs() : 절대값 : 음수 -> 양수
+                                       * random() : 임의 수 : 0이상 1미만
+                                       2. java.util.Scanner
+                                       3. java.util.StringTokenizer
