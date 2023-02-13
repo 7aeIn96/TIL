@@ -19,7 +19,7 @@
       1. Exception
       2. RuntimeException
       3. ArithmeticException
-________________
+
     3.  try-catch-finally 문
          * try {
                 // 예외가 발생할지도 모르는 구간
